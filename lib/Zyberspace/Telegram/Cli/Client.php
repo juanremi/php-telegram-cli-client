@@ -71,6 +71,25 @@ class Client extends RawClient
     }
 
     /**
+     * Sends a file attach to $peer.
+     *
+     * @param string $peer The peer, gets escaped with escapePeer()
+     * @param string $pathfile The path of the file to send, gets formated with formatFileName(). You need to specify the absolute path to your file. Ex. /path/my/file.jpg
+     *
+     * @return boolean true on success, false otherwise
+     *
+     * @uses exec()
+     * @uses escapePeer()
+     * @uses formatFileName()
+     */
+    public function msgfile($peer, $pathfile)
+    {
+        $peer = $this->escapePeer($peer);
+        $pathfile = $this->formatFileName($pathfile);
+        return $this->exec('send_file ' . $peer . ' ' . $pathfile);
+    }
+
+    /**
      * Sends a text message to several users at once.
      *
      * @param array $userList List of users / contacts that shall receive the message,
